@@ -19,14 +19,17 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
+
+  TextEditingController controller = TextEditingController();
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
         leading: Icon(
-            Icons.arrow_back, 
-            size: 30, 
+            Icons.arrow_back,
+            size: 30,
             color: Colors.grey
         ),
         title: Text('Home Screen', style: TextStyle(
@@ -43,44 +46,78 @@ class HomeScreen extends StatelessWidget {
           SizedBox(width: 20,)
         ],
       ),
-      body: Column(
-        // mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                validator: (String? value){
+                  // if(value?.contains('@')== false){
+                  //   return 'Enter Valid Email';
+                  // }
+                  // return null;
 
-        children: [
-          Text('Hello'),
-          Icon(Icons.add, size: 50,),
-          Text('Hello Ahmed Saber'),
-          Container(
-            width: 100,
-            height: 100,
-            // color: Colors.blueAccent,
-            alignment: Alignment.center, // as wrapping with center
-            decoration: BoxDecoration(
-              color: Colors.blueAccent,
-              shape: BoxShape.circle,
-              // borderRadius: BorderRadius.circular(5)
-            ),
-            child: Text('data'),
+                  //  Regex
+                  // ahmed@gmail.com
+                  var emailSimpleRegex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9]+@+[a-zA-Z0-9]+\.[a-zA-Z]{2}");
+                  if(!emailSimpleRegex.hasMatch(value??'')){
+                    return 'Enter Valid Email';
+                  }
+                  return null;
+                },
+                controller: controller,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  hintText: 'Enter Your Email',
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: Colors.green
+                    )
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                        color: Colors.grey
+                    )
+                  )
+                ),
+                // enabled: false,
+                // readOnly: true,
+                // onTap: (){
+                //   // print('Text Field  is Tapped');
+                //   showDatePicker(
+                //     context: context,
+                //     firstDate: DateTime.now(),
+                //     lastDate: DateTime.now().add(Duration(days: 365)),
+                //   );
+                // },
+                onChanged: (String? value){
+                  print(value);
+                },
+
+              ),
+
+              SizedBox(
+                height: 20,
+              ),
+              Text(r'Hello \n World'),
+
+              ElevatedButton(onPressed: (){
+                // print(controller.text);
+                if(formKey.currentState?.validate() == true){
+                  // call api();
+                  print('Validated true');
+                  print(controller.text);
+                }
+              }, child: Text('BTN'))
+            ],
           ),
-
-          SizedBox(height: 20,),
-          Container(
-            width: 100,
-            height: 100,
-            // color: Colors.blueAccent,
-            alignment: Alignment.center, // as wrapping with center
-            decoration: BoxDecoration(
-              color: Colors.blueAccent,
-              // shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(20)
-            ),
-            child: Text('data'),
-          ),
-
-        ],
-      ),
+        ),
+      )
     );
   }
 }
