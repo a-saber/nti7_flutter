@@ -17,11 +17,41 @@ class MyApp extends StatelessWidget {
     return MaterialApp(debugShowCheckedModeBanner: false, home: HomeScreen());
   }
 }
+class CountryModel {
+  int id;
+  int phoneCode;
+  String name;
 
+  CountryModel({
+    required this.id,
+    required this.phoneCode,
+    required this.name
+});
+}
 class HomeScreen extends StatelessWidget {
   TextEditingController controller = TextEditingController();
+  var phoneController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  List<String> countries = ['Egypt', 'KSA', 'USA', 'UAE', 'Jordan'];
+  // List<String> countries = ['Egypt', 'KSA', 'USA', 'UAE', 'Jordan'];
+  List<CountryModel> countries = [
+    CountryModel(id: 1, phoneCode: 20, name: 'Egypt'),
+    CountryModel(id: 2, phoneCode: 966, name: 'KSA'),
+    CountryModel(id: 3, phoneCode: 1, name: 'USA'),
+  ];
+  /*
+  Country Model
+  - id
+  - name
+  - phoneCode
+
+  [
+    CountryModel(id: 1, name: 'Egypt', phoneCode: 20),
+    CountryModel(id: 2, name: 'KSA', phoneCode: 966),
+  ]
+
+  design : PhoneCode + CountryName
+  value: id
+   */
   List<String> names = ['Ahmed', 'Mohamed', 'Sayed', 'Ahmed', 'Mohamed'];
 
   @override
@@ -149,13 +179,28 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
 
-              DropdownButtonFormField<String>(
-                items: countries.map((String oldElement)=>
-                    DropdownMenuItem(value: oldElement,child: Text(oldElement),)
-                ).toList(),
-                  onChanged: (value){
-                  print(value);
-                  }),
+
+
+              TextFormField(
+                controller: phoneController,
+                decoration: InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(),
+                  prefixIcon: DropdownButton<CountryModel>(
+                      // decoration: InputDecoration(
+                      //   labelText: 'Code',
+                      // ),
+                      items: countries.map((CountryModel oldElement)=>
+                          DropdownMenuItem(value: oldElement,
+                            child: Text('${oldElement.phoneCode}'),)
+                      ).toList(),
+                      onChanged: (value){
+                        print(value?.id);
+                        print('+${value?.phoneCode} ${phoneController.text}');
+                      }),
+                  // suffixIcon: Icon(Icons.check),
+                ),
+              ),
 
               SizedBox(height: 20),
               GestureDetector(onTap: () {}, child: Text(r'Hello \n World')),
@@ -169,6 +214,7 @@ class HomeScreen extends StatelessWidget {
                     print('Validated true');
                     print(controller.text);
                   }
+                  // print('${}')
                 },
                 child: Text('BTN'),
               ),
