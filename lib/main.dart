@@ -22,6 +22,8 @@ class HomeScreen extends StatelessWidget {
   TextEditingController controller = TextEditingController();
   var formKey = GlobalKey<FormState>();
   List<String> countries = ['Egypt', 'KSA', 'USA', 'UAE', 'Jordan'];
+  List<String> names = ['Ahmed', 'Mohamed', 'Sayed', 'Ahmed', 'Mohamed'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
