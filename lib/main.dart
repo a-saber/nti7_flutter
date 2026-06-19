@@ -17,27 +17,30 @@ class MyApp extends StatelessWidget {
     return MaterialApp(debugShowCheckedModeBanner: false, home: HomeScreen());
   }
 }
+
 class CountryModel {
   int id;
   int phoneCode;
   String name;
 
-  CountryModel({
-    required this.id,
-    required this.phoneCode,
-    required this.name
-});
+  CountryModel({required this.id, required this.phoneCode, required this.name});
 }
+
 class HomeScreen extends StatelessWidget {
+
   TextEditingController controller = TextEditingController();
+
   var phoneController = TextEditingController();
+
   var formKey = GlobalKey<FormState>();
+
   // List<String> countries = ['Egypt', 'KSA', 'USA', 'UAE', 'Jordan'];
   List<CountryModel> countries = [
     CountryModel(id: 1, phoneCode: 20, name: 'Egypt'),
     CountryModel(id: 2, phoneCode: 966, name: 'KSA'),
     CountryModel(id: 3, phoneCode: 1, name: 'USA'),
   ];
+
   /*
   Country Model
   - id
@@ -54,8 +57,11 @@ class HomeScreen extends StatelessWidget {
    */
   List<String> names = ['Ahmed', 'Mohamed', 'Sayed', 'Ahmed', 'Mohamed'];
 
+
   @override
   Widget build(BuildContext context) {
+    print('rebuild');
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -155,11 +161,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ],
-                onChanged: (int? value){
+                onChanged: (int? value) {
                   print('Selected Value: $value');
                 },
-                validator: (int? value){
-                  if(value == null){
+                validator: (int? value) {
+                  if (value == null) {
                     return 'Select Option';
                   }
                   return null;
@@ -178,8 +184,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-
+              TestCheckBox(),
 
               TextFormField(
                 controller: phoneController,
@@ -187,17 +192,22 @@ class HomeScreen extends StatelessWidget {
                   labelText: 'Phone Number',
                   border: OutlineInputBorder(),
                   prefixIcon: DropdownButton<CountryModel>(
-                      // decoration: InputDecoration(
-                      //   labelText: 'Code',
-                      // ),
-                      items: countries.map((CountryModel oldElement)=>
-                          DropdownMenuItem(value: oldElement,
-                            child: Text('${oldElement.phoneCode}'),)
-                      ).toList(),
-                      onChanged: (value){
-                        print(value?.id);
-                        print('+${value?.phoneCode} ${phoneController.text}');
-                      }),
+                    // decoration: InputDecoration(
+                    //   labelText: 'Code',
+                    // ),
+                    items: countries
+                        .map(
+                          (CountryModel oldElement) => DropdownMenuItem(
+                            value: oldElement,
+                            child: Text('${oldElement.phoneCode}'),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      print(value?.id);
+                      print('+${value?.phoneCode} ${phoneController.text}');
+                    },
+                  ),
                   // suffixIcon: Icon(Icons.check),
                 ),
               ),
@@ -225,3 +235,29 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
+class TestCheckBox extends StatefulWidget{
+  @override
+  State<TestCheckBox> createState() {
+    return TestCheckBoxState();
+  }
+}
+class TestCheckBoxState extends State<TestCheckBox>{
+  bool? checkBox = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return    Checkbox(
+      value: checkBox,
+      onChanged: (value) {
+        setState(() {
+          checkBox = value;
+          print(checkBox);
+        });
+      },
+    );
+  }
+
+}
+
