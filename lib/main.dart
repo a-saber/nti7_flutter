@@ -227,7 +227,8 @@ class HomeScreen extends StatelessWidget {
                 child: Text('BTN'),
               ),
               SizedBox(height: 20),
-              TestSwitch()
+              TestSwitch(),
+
             ],
           ),
         ),
@@ -277,6 +278,15 @@ class TestSwitchState extends State<TestSwitch> {
   @override
   Widget build(BuildContext context) {
     return SwitchListTile(
+      activeColor:  Colors.green,
+      inactiveThumbColor: Colors.cyan,
+      activeTrackColor: Colors.red,
+      inactiveTrackColor: Colors.amber,
+      onFocusChange: (bool value){
+        print('On Focus Change: $value');
+      },
+      title: Text('Allow Contact'),
+      subtitle: Text('Allow contact to see your name and profile picture'),
       value: value,
       onChanged: (v) {
         setState(() {
