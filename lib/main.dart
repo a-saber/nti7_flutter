@@ -86,7 +86,7 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Form(
           key: formKey,
-          child: Column(
+          child: ListView(
             children: [
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -214,6 +214,12 @@ class HomeScreen extends StatelessWidget {
               GestureDetector(onTap: () {}, child: Text(r'Hello \n World')),
               InkWell(onTap: () {}, child: Text(r'Hello \n World')),
 
+              IconButton(onPressed: (){}, icon: Icon(Icons.add),
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white
+              ),),
+              TextButton(onPressed: (){}, child: Text('data')),
               ElevatedButton(
                 onPressed: () {
                   // print(controller.text);
@@ -228,6 +234,20 @@ class HomeScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               TestSwitch(),
+              ElevatedButton(
+                  onPressed: (){
+                    print('tabbed');
+                  },
+                  child: Text('BTN'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)
+                  )
+                ),
+
+              )
 
             ],
           ),
