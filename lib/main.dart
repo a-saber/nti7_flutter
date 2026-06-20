@@ -27,7 +27,6 @@ class CountryModel {
 }
 
 class HomeScreen extends StatelessWidget {
-
   TextEditingController controller = TextEditingController();
 
   var phoneController = TextEditingController();
@@ -56,7 +55,6 @@ class HomeScreen extends StatelessWidget {
   value: id
    */
   List<String> names = ['Ahmed', 'Mohamed', 'Sayed', 'Ahmed', 'Mohamed'];
-
 
   @override
   Widget build(BuildContext context) {
@@ -236,28 +234,25 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
-class TestCheckBox extends StatefulWidget{
+class TestCheckBox extends StatefulWidget {
   @override
   State<TestCheckBox> createState() {
     return TestCheckBoxState();
   }
 }
-class TestCheckBoxState extends State<TestCheckBox>{
-  bool? checkBox = false;
+
+class TestCheckBoxState extends State<TestCheckBox> {
+  bool? checkBox = true;
 
   @override
   Widget build(BuildContext context) {
-    return    Checkbox(
+    return Checkbox(
       value: checkBox,
       onChanged: (value) {
         setState(() {
           checkBox = value;
-          print(checkBox);
         });
       },
     );
   }
-
 }
-
