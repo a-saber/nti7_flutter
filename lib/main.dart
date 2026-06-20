@@ -226,6 +226,8 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: Text('BTN'),
               ),
+              SizedBox(height: 20),
+              TestSwitch()
             ],
           ),
         ),
@@ -241,16 +243,44 @@ class TestCheckBox extends StatefulWidget {
   }
 }
 
+// Switch
 class TestCheckBoxState extends State<TestCheckBox> {
   bool? checkBox = true;
 
   @override
   Widget build(BuildContext context) {
-    return Checkbox(
+    return CheckboxListTile(
+      activeColor: Colors.green,
+      checkColor: Colors.red,
+      title: Text('Allow Contact'),
+      subtitle: Text('Allow contact to see your name and profile picture'),
       value: checkBox,
       onChanged: (value) {
         setState(() {
           checkBox = value;
+        });
+      },
+    );
+  }
+}
+
+class TestSwitch extends StatefulWidget {
+  @override
+  State<TestSwitch> createState() {
+    return TestSwitchState();
+  }
+}
+
+class TestSwitchState extends State<TestSwitch> {
+  bool value = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return SwitchListTile(
+      value: value,
+      onChanged: (v) {
+        setState(() {
+          value = v;
         });
       },
     );
