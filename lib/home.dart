@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nti7_flutter/get_tasks_model.dart';
 
 import 'add_task_view.dart';
 import 'dio_helper.dart';
@@ -31,7 +32,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   bool isLoading = false;
-  List tasks = [];
+  List<TaskModel> tasks = [];
 
   Future getTasks() async {
     try {
@@ -46,8 +47,9 @@ class _HomeViewState extends State<HomeView> {
       );
       print(result.data.toString());
       var mapResponse = result.data as Map<String, dynamic>;
+      GetTasksResponseModel model = GetTasksResponseModel.fromJson(mapResponse);
       setState(() {
-        tasks = mapResponse['tasks'];
+        tasks = model.tasks ?? [];
         isLoading = false;
       });
     } catch (e) {
@@ -130,7 +132,7 @@ class _HomeViewState extends State<HomeView> {
           : ListView.separated(
               padding: REdgeInsets.symmetric(horizontal: 22),
               itemBuilder: (context, index) => TaskItemBuilder(
-                taskData: tasks[index] as Map<String, dynamic>,
+                taskData: tasks[index],
               ),
               separatorBuilder: (context, index) => SizedBox(height: 20.h),
               itemCount: tasks.length,
@@ -142,7 +144,7 @@ class _HomeViewState extends State<HomeView> {
 class TaskItemBuilder extends StatelessWidget {
   const TaskItemBuilder({super.key, required this.taskData});
 
-  final Map<String, dynamic> taskData;
+  final TaskModel taskData;
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +172,7 @@ class TaskItemBuilder extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  taskData['title'],
+                  taskData.title??'-',
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 12.sp,
@@ -179,7 +181,7 @@ class TaskItemBuilder extends StatelessWidget {
                 ),
                 SizedBox(height: 13.h),
                 Text(
-                  taskData['description'],
+                  taskData.description??'-',
                   style: TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 14.sp,
@@ -192,7 +194,7 @@ class TaskItemBuilder extends StatelessWidget {
           SizedBox(width: 20.w),
           Expanded(
             child: Text(
-              taskData['created_at'],
+              taskData.createdAt??'-',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.w400,
