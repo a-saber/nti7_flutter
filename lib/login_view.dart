@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti7_flutter/home.dart';
+import 'package:nti7_flutter/login_response_model.dart';
 
 import 'dio_helper.dart';
 import 'let_start_view.dart';
@@ -116,6 +117,9 @@ class _LoginViewState extends State<LoginView> {
           data: FormData.fromMap({'username': username.text, 'password': password.text}));
 
       var mapResponse = response.data as Map<String, dynamic>;
+
+      LoginResponseModel loginResponseModel =
+      LoginResponseModel.fromJson(mapResponse);
       print(response.toString());
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Color(0xff149954),
@@ -130,9 +134,9 @@ class _LoginViewState extends State<LoginView> {
         )));
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context)=> HomeView(
-            username: mapResponse['user']['username'],
-            imagePath: mapResponse['user']['image_path'],
-            accessToken: mapResponse['access_token'],
+            username: loginResponseModel.user?.username,
+            imagePath: loginResponseModel.user?.imagePath,
+            accessToken: loginResponseModel.accessToken!,
           )),
           (r)=> false);
     } catch (e) {

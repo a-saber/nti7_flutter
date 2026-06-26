@@ -6,6 +6,7 @@ import 'add_task_view.dart';
 import 'dio_helper.dart';
 import 'login_view.dart';
 
+
 class HomeView extends StatefulWidget {
   const HomeView({
     super.key,
@@ -14,7 +15,7 @@ class HomeView extends StatefulWidget {
     required this.accessToken,
   });
 
-  final String username;
+  final String? username;
   final String? imagePath;
   final String accessToken;
 
@@ -101,7 +102,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 SizedBox(height: 4),
                 Text(
-                  widget.username,
+                  widget.username??'-',
                   style: TextStyle(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w300,
