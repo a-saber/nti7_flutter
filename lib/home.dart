@@ -71,13 +71,15 @@ class _HomeViewState extends State<HomeView> {
           //       lastDate: DateTime.now().add(Duration(days:365)));
           //  TimeOfDay? selectedTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
 
-         bool? newFetch = await Navigator.push(
+          bool? fetch = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddTaskView()),
+            MaterialPageRoute(builder: (context) => AddTaskView(
+              accessToken: widget.accessToken,
+            )),
           );
-         if(newFetch== true){
-           getTasks();
-         }
+          if(fetch == true){
+            getTasks();
+          }
         },
         child: Icon(Icons.add, color: Colors.white),
       ),
@@ -129,14 +131,19 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
             )
-          : ListView.separated(
-              padding: REdgeInsets.symmetric(horizontal: 22),
-              itemBuilder: (context, index) => TaskItemBuilder(
-                taskData: tasks[index],
+          : RefreshIndicator(
+            onRefresh: () async{
+              getTasks();
+            },
+            child: ListView.separated(
+                padding: REdgeInsets.symmetric(horizontal: 22),
+                itemBuilder: (context, index) => TaskItemBuilder(
+                  taskData: tasks[index],
+                ),
+                separatorBuilder: (context, index) => SizedBox(height: 20.h),
+                itemCount: tasks.length,
               ),
-              separatorBuilder: (context, index) => SizedBox(height: 20.h),
-              itemCount: tasks.length,
-            ),
+          ),
     );
   }
 }

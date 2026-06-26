@@ -121,17 +121,7 @@ class _LoginViewState extends State<LoginView> {
       LoginResponseModel loginResponseModel =
       LoginResponseModel.fromJson(mapResponse);
       print(response.toString());
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Color(0xff149954),
-        content: Row(
-          children: [
-            Icon(Icons.check_circle, color: Colors.white,),
-            SizedBox(width: 10,),
-            Text('Login Successfully\nWelcome', style: TextStyle(
-              color: Colors.white
-            ),),
-          ],
-        )));
+      showSuccessSnackBar(context, 'Login Successfully\nWelcome');
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context)=> HomeView(
             username: loginResponseModel.user?.username,
@@ -148,7 +138,17 @@ class _LoginViewState extends State<LoginView> {
 }
 
 
-
+showSuccessSnackBar(context, String text)=> ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    backgroundColor: Color(0xff149954),
+    content: Row(
+      children: [
+        Icon(Icons.check_circle, color: Colors.white,),
+        SizedBox(width: 10,),
+        Text(text, style: TextStyle(
+            color: Colors.white
+        ),),
+      ],
+    )));
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({super.key, required this.controller, required this.hintText, this.prefixIcon, this.suffixIcon, this.obscureText = false});
