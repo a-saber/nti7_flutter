@@ -1,30 +1,30 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nti7_flutter/core/helper/app_validator.dart';
-import 'package:nti7_flutter/home.dart';
-import 'package:nti7_flutter/login_response_model.dart';
-import 'package:nti7_flutter/register_view.dart';
+import 'package:nti7_flutter/dio_helper.dart';
 
 import 'core/components/custom_btn.dart';
 import 'core/components/custom_text_field.dart';
 import 'core/helper/snack_bar.dart';
-import 'dio_helper.dart';
 import 'let_start_view.dart';
+import 'login_view.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
+
   final username = TextEditingController();
 
   final password = TextEditingController();
+  final passwordConfirm = TextEditingController();
 
   bool passwordSecure = true;
+  bool passwordConfirmSecure = true;
 
   bool isLoading = false;
 
@@ -44,13 +44,24 @@ class _LoginViewState extends State<LoginView> {
                   controller: username,
                   hintText: 'Username',
                   prefixIcon: Icon(Icons.person),
-                  validator: AppValidator.validateRequired,
                 ),
                 SizedBox(height: 10.h,),
                 CustomTextField(
                   controller: password,
                   obscureText: passwordSecure,
                   hintText: 'Password',
+                  prefixIcon: Icon(Icons.key),
+                  suffixIcon: IconButton(onPressed: (){
+                    setState(() {
+                      passwordSecure = !passwordSecure;
+                    });
+                  }, icon: Icon(Icons.lock_open)),
+                ),
+                SizedBox(height: 10.h,),
+                CustomTextField(
+                  controller: passwordConfirm,
+                  obscureText: passwordConfirmSecure,
+                  hintText: 'Password Confirm',
                   prefixIcon: Icon(Icons.key),
                   suffixIcon: IconButton(onPressed: (){
                     setState(() {
@@ -79,21 +90,9 @@ class _LoginViewState extends State<LoginView> {
                   CircularProgressIndicator()
                 else
                   CustomBtn(
-                    text: 'Login',
-                    onTap: isLoading? null : onLoginPressed,
+                    text: 'Register',
+                    onTap: isLoading? null : onRegisterPressed,
                   ),
-
-                SizedBox(height: 30.h,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Don\'t  have an account'),
-                    SizedBox(width: 10,),
-                    TextButton(onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> RegisterView()));
-                    }, child: Text('Register'))
-                  ],
-                )
 
 
                 // LinearProgressIndicator(),
@@ -106,65 +105,38 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  onLoginPressed() async{
-    print('start calling api');
+  onRegisterPressed()async {
     setState(() {
       isLoading = true;
     });
-    await login();
+
+    // TODO: implement formKey validation
+
+    // implement api
+    await registerApi();
+
     setState(() {
       isLoading = false;
     });
   }
 
-  Future login() async {
-    try {
+  Future registerApi()async{
+    try{
+      var result = await dio.post('register',
+        data: FormData.fromMap({
+          'username': username.text,
+          'password': password.text,
+          // 'image': ,
+        })
+      );
+      var mapResponse = result.data as Map<String, dynamic>;
+      String successMsg = mapResponse['message'];
+      showCustomSnackBar(context, text: successMsg, status: SnackBarStatus.success);
 
-      var response = await dio.post('login',
-          data: FormData.fromMap({'username': username.text, 'password': password.text}));
+      Navigator.pop(context);
 
-      var mapResponse = response.data as Map<String, dynamic>;
-
-      LoginResponseModel loginResponseModel =
-      LoginResponseModel.fromJson(mapResponse);
-      print(response.toString());
-      showCustomSnackBar(context, text: 'Login Successfully\nWelcome', status: SnackBarStatus.success);
-
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context)=> HomeView(
-            username: loginResponseModel.user?.username,
-            imagePath: loginResponseModel.user?.imagePath,
-            accessToken: loginResponseModel.accessToken!,
-          )),
-          (r)=> false);
-    } catch (e) {
+    }catch(e){
       handleDioException(e, context);
     }
-  }
-
-
-}
-
-
-
-
-
-class DefaultImage extends StatelessWidget {
-  const DefaultImage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-        bottomRight: Radius.circular(20.r),
-        bottomLeft: Radius.circular(20.r),
-      ),
-      child: Image.asset('assets/images/flag.png',
-        width: double.infinity,
-        height: 300.h,
-        fit: BoxFit.cover,
-
-      ),
-    );
   }
 }

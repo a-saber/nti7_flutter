@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nti7_flutter/core/utils/app_colors.dart';
 
 import 'home.dart';
 import 'splash_view.dart';
@@ -19,9 +20,9 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            scaffoldBackgroundColor: Color(0xffF3F5F4),
+            scaffoldBackgroundColor: AppColors.scaffoldBackground,
             fontFamily: 'Lexend_Deca',
-            colorScheme: ColorScheme.fromSeed(seedColor: Color(0xff149954)),
+            colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
           ),
           home: SplashView(),
         );

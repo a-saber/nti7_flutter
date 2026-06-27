@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti7_flutter/let_start_view.dart';
 import 'package:nti7_flutter/login_view.dart';
 
+import 'core/components/custom_btn.dart';
+import 'core/components/custom_text_field.dart';
+import 'core/helper/snack_bar.dart';
 import 'dio_helper.dart';
 
 class AddTaskView extends StatefulWidget {
@@ -74,7 +77,8 @@ class _AddTaskViewState extends State<AddTaskView> {
       );
       var mapResponse = result.data as Map<String, dynamic>;
       String message = mapResponse['message'];
-      showSuccessSnackBar(context, message);
+      showCustomSnackBar(context, text: message, status: SnackBarStatus.success);
+
       Navigator.pop(context, true);
     }
     catch(e){
