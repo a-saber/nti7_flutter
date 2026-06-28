@@ -82,7 +82,7 @@ class _AddTaskViewState extends State<AddTaskView> {
       Navigator.pop(context, true);
     }
     catch(e){
-      handleDioException(e, context);
+      handleDioException(e,);
     }
 
 

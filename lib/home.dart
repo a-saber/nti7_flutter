@@ -6,7 +6,6 @@ import 'package:nti7_flutter/get_tasks_model.dart';
 
 import 'add_task_view.dart';
 import 'dio_helper.dart';
-import 'features/auth/presentation/views/login_view.dart';
 
 
 class HomeView extends StatefulWidget {
@@ -54,7 +53,7 @@ class _HomeViewState extends State<HomeView> {
         isLoading = false;
       });
     } catch (e) {
-      handleDioException(e, context);
+      handleDioException(e,);
       setState(() {
         isLoading = false;
       });

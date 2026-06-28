@@ -38,6 +38,7 @@ dependencies:
   flutter_screenutil:
   dio:
   flutter_bloc:
+  dartz:
 
 dev_dependencies:
   flutter_test:

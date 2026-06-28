@@ -136,7 +136,7 @@ class _RegisterViewState extends State<RegisterView> {
       Navigator.pop(context);
 
     }catch(e){
-      handleDioException(e, context);
+      handleDioException(e);
     }
   }
 }

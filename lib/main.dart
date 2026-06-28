@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti7_flutter/core/utils/app_colors.dart';
 
-import 'features/auth/presentation/views/test_view.dart';
 import 'home.dart';
 import 'splash_view.dart';
 
@@ -25,8 +24,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Lexend_Deca',
             colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
           ),
-          // home: SplashView(),
-          home: TestView(),
+          home: SplashView(),
         );
       },
     );
