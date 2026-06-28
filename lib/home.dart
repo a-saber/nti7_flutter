@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nti7_flutter/core/helper/my_navigator.dart';
 import 'package:nti7_flutter/get_tasks_model.dart';
 
 import 'add_task_view.dart';
 import 'dio_helper.dart';
-import 'login_view.dart';
+import 'features/auth/presentation/views/login_view.dart';
 
 
 class HomeView extends StatefulWidget {
@@ -71,12 +72,14 @@ class _HomeViewState extends State<HomeView> {
           //       lastDate: DateTime.now().add(Duration(days:365)));
           //  TimeOfDay? selectedTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
 
-          bool? fetch = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddTaskView(
-              accessToken: widget.accessToken,
-            )),
-          );
+          // bool? fetch = await Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => AddTaskView(
+          //     accessToken: widget.accessToken,
+          //   )),
+          // );
+
+          bool? fetch = await goTo(context, page: AddTaskView(accessToken: widget.accessToken));
           if(fetch == true){
             getTasks();
           }

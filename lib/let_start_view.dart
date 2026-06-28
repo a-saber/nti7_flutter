@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nti7_flutter/core/components/custom_svg.dart';
 import 'package:nti7_flutter/core/utils/app_assets.dart';
-import 'package:nti7_flutter/login_view.dart';
+import 'package:nti7_flutter/features/auth/presentation/views/login_view.dart';
 
 import 'core/components/custom_btn.dart';
 

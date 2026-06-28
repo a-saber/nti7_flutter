@@ -12,6 +12,7 @@ showCustomSnackBar(context, {required String text, required SnackBarStatus statu
     case SnackBarStatus.success:
       background = AppColors.primary;
       icon = Icons.check_circle;
+      return ;
     case SnackBarStatus.fail:
       background = AppColors.error;
       icon = Icons.error;

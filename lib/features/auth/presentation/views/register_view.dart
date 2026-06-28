@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti7_flutter/dio_helper.dart';
 
-import 'core/components/custom_btn.dart';
-import 'core/components/custom_text_field.dart';
-import 'core/helper/snack_bar.dart';
-import 'let_start_view.dart';
+import '../../../../core/components/custom_btn.dart';
+import '../../../../core/components/custom_text_field.dart';
+import '../../../../core/helper/show_snack_bar.dart';
+import '../../../../let_start_view.dart';
 import 'login_view.dart';
 
 class RegisterView extends StatefulWidget {

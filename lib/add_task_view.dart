@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti7_flutter/let_start_view.dart';
-import 'package:nti7_flutter/login_view.dart';
+import 'package:nti7_flutter/features/auth/presentation/views/login_view.dart';
 
 import 'core/components/custom_btn.dart';
 import 'core/components/custom_text_field.dart';
-import 'core/helper/snack_bar.dart';
+import 'core/helper/show_snack_bar.dart';
 import 'dio_helper.dart';
 
 class AddTaskView extends StatefulWidget {

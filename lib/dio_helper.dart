@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:nti7_flutter/core/helper/snack_bar.dart';
+import 'package:nti7_flutter/core/helper/show_snack_bar.dart';
 
 Dio dio = Dio(BaseOptions(
     baseUrl: 'https://ntitodo-production-3c33.up.railway.app/api/'));

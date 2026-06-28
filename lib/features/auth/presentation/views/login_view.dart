@@ -1,16 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nti7_flutter/core/helper/app_validator.dart';
+import 'package:nti7_flutter/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
+import 'package:nti7_flutter/features/auth/presentation/cubit/login_cubit/login_state.dart';
 import 'package:nti7_flutter/home.dart';
 import 'package:nti7_flutter/login_response_model.dart';
-import 'package:nti7_flutter/register_view.dart';
+import 'package:nti7_flutter/features/auth/presentation/views/register_view.dart';
 
-import 'core/components/custom_btn.dart';
-import 'core/components/custom_text_field.dart';
-import 'core/helper/snack_bar.dart';
-import 'dio_helper.dart';
-import 'let_start_view.dart';
+import '../../../../core/components/custom_btn.dart';
+import '../../../../core/components/custom_text_field.dart';
+import '../../../../core/helper/show_snack_bar.dart';
+import '../../../../dio_helper.dart';
+import '../../../../let_start_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -23,8 +26,6 @@ class _LoginViewState extends State<LoginView> {
   final username = TextEditingController();
 
   final password = TextEditingController();
-
-  bool passwordSecure = true;
 
   bool isLoading = false;
 
@@ -47,16 +48,21 @@ class _LoginViewState extends State<LoginView> {
                   validator: AppValidator.validateRequired,
                 ),
                 SizedBox(height: 10.h,),
-                CustomTextField(
-                  controller: password,
-                  obscureText: passwordSecure,
-                  hintText: 'Password',
-                  prefixIcon: Icon(Icons.key),
-                  suffixIcon: IconButton(onPressed: (){
-                    setState(() {
-                      passwordSecure = !passwordSecure;
-                    });
-                  }, icon: Icon(Icons.lock_open)),
+                BlocProvider(
+                  create: (context) => LoginCubit(),
+                  child: BlocBuilder<LoginCubit, LoginState>(
+                    builder: (context, state) {
+                      return CustomTextField(
+                        controller: password,
+                        obscureText: LoginCubit.get(context).passwordSecure,
+                        hintText: 'Password',
+                        prefixIcon: Icon(Icons.key),
+                        suffixIcon: IconButton(
+                            onPressed: LoginCubit.get(context).changePasswordSecure,
+                            icon: Icon(Icons.lock_open)),
+                      );
+                    }
+                  ),
                 ),
                 SizedBox(height: 23.h,),
 
